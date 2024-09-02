@@ -1,24 +1,3 @@
-diff --git a/arch/arm/dts/zynq-pluto-sdr.dts b/arch/arm/dts/zynq-pluto-sdr.dts
-index c618d98b54..40a8cef054 100644
---- a/arch/arm/dts/zynq-pluto-sdr.dts
-+++ b/arch/arm/dts/zynq-pluto-sdr.dts
-@@ -16,6 +16,7 @@
- 		ethernet0 = &gem0;
- 		serial0 = &uart1;
- 		spi0 = &qspi;
-+		mmc0 = &sdhci0;
- 	};
- 
- 	memory {
-@@ -75,3 +76,8 @@
- 	dr_mode = "host";
- 	usb-phy = <&usb_phy0>;
- };
-+
-+&sdhci0 {
-+	u-boot,dm-pre-reloc;
-+	status = "okay";
-+};
 diff --git a/include/configs/zynq-common.h b/include/configs/zynq-common.h
 index fd50caf450..3b468e6813 100644
 --- a/include/configs/zynq-common.h
