@@ -1,5 +1,5 @@
 diff --git a/include/configs/zynq-common.h b/include/configs/zynq-common.h
-index fd50caf450..3b468e6813 100644
+index fd50caf4..3b468e68 100644
 --- a/include/configs/zynq-common.h
 +++ b/include/configs/zynq-common.h
 @@ -16,6 +16,9 @@
