@@ -1,4 +1,4 @@
-git diff --ignore-submodules > patches/fw.diff
+rem git diff --ignore-submodules > patches/fw.diff
 cd hdl
 git diff > ../patches/hdl.diff
 cd ../linux
