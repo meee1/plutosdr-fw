@@ -1,68 +1,8 @@
 diff --git a/projects/pluto/system_bd.tcl b/projects/pluto/system_bd.tcl
-index 4787085..247beef 100644
+index 4787085..6798f0e 100644
 --- a/projects/pluto/system_bd.tcl
 +++ b/projects/pluto/system_bd.tcl
-@@ -50,6 +50,13 @@ ad_ip_parameter sys_ps7 CONFIG.PCW_FPGA0_PERIPHERAL_FREQMHZ 100.0
- ad_ip_parameter sys_ps7 CONFIG.PCW_FPGA1_PERIPHERAL_FREQMHZ 200.0
- ad_ip_parameter sys_ps7 CONFIG.PCW_GPIO_EMIO_GPIO_ENABLE 1
- ad_ip_parameter sys_ps7 CONFIG.PCW_GPIO_EMIO_GPIO_IO 18
-+
-+ad_ip_parameter sys_ps7 CONFIG.PCW_EN_ENET0 1
-+ad_ip_parameter sys_ps7 CONFIG.PCW_ENET0_PERIPHERAL_ENABLE 1
-+ad_ip_parameter sys_ps7 CONFIG.PCW_ENET0_ENET0_IO {MIO 16 .. 27}
-+ad_ip_parameter sys_ps7 CONFIG.PCW_ENET0_GRP_MDIO_ENABLE 1
-+ad_ip_parameter sys_ps7 CONFIG.PCW_ENET0_GRP_MDIO_IO {MIO 52 .. 53}
-+
- ad_ip_parameter sys_ps7 CONFIG.PCW_SPI1_PERIPHERAL_ENABLE 0
- ad_ip_parameter sys_ps7 CONFIG.PCW_I2C0_PERIPHERAL_ENABLE 0
- ad_ip_parameter sys_ps7 CONFIG.PCW_UART1_PERIPHERAL_ENABLE 1
-@@ -57,16 +64,28 @@ ad_ip_parameter sys_ps7 CONFIG.PCW_UART1_UART1_IO {MIO 12 .. 13}
- ad_ip_parameter sys_ps7 CONFIG.PCW_I2C1_PERIPHERAL_ENABLE 0
- ad_ip_parameter sys_ps7 CONFIG.PCW_QSPI_PERIPHERAL_ENABLE 1
- ad_ip_parameter sys_ps7 CONFIG.PCW_QSPI_GRP_SINGLE_SS_ENABLE 1
--ad_ip_parameter sys_ps7 CONFIG.PCW_SD0_PERIPHERAL_ENABLE 0
- ad_ip_parameter sys_ps7 CONFIG.PCW_SPI0_PERIPHERAL_ENABLE 1
- ad_ip_parameter sys_ps7 CONFIG.PCW_SPI0_SPI0_IO EMIO
-+
-+ad_ip_parameter sys_ps7 CONFIG.PCW_SD0_PERIPHERAL_ENABLE 1
-+ad_ip_parameter sys_ps7 CONFIG.PCW_SD0_SD0_IO "MIO 40 .. 45"
-+ad_ip_parameter sys_ps7 CONFIG.PCW_SD0_GRP_CD_ENABLE 1
-+ad_ip_parameter sys_ps7 CONFIG.PCW_SD0_GRP_CD_IO "MIO 47"
-+ad_ip_parameter sys_ps7 CONFIG.PCW_MIO_47_PULLUP {enabled}
-+ad_ip_parameter sys_ps7 CONFIG.PCW_MIO_47_SLEW {slow}
-+ad_ip_parameter sys_ps7 CONFIG.PCW_SD0_GRP_POW_ENABLE    0
-+ad_ip_parameter sys_ps7 CONFIG.PCW_SD0_GRP_WP_ENABLE     0
-+
- ad_ip_parameter sys_ps7 CONFIG.PCW_TTC0_PERIPHERAL_ENABLE 0
- ad_ip_parameter sys_ps7 CONFIG.PCW_USE_FABRIC_INTERRUPT 1
- ad_ip_parameter sys_ps7 CONFIG.PCW_USB0_PERIPHERAL_ENABLE 1
- ad_ip_parameter sys_ps7 CONFIG.PCW_GPIO_MIO_GPIO_ENABLE 1
- ad_ip_parameter sys_ps7 CONFIG.PCW_GPIO_MIO_GPIO_IO MIO
--ad_ip_parameter sys_ps7 CONFIG.PCW_USB0_RESET_IO {MIO 52}
-+ad_ip_parameter sys_ps7 CONFIG.PCW_USB0_RESET_IO {MIO 46}
- ad_ip_parameter sys_ps7 CONFIG.PCW_USB0_RESET_ENABLE 1
-+ad_ip_parameter sys_ps7 CONFIG.PCW_MIO_46_SLEW {slow}
-+ad_ip_parameter sys_ps7 CONFIG.PCW_MIO_46_PULLUP {enabled}
-+
- ad_ip_parameter sys_ps7 CONFIG.PCW_IRQ_F2P_INTR 1
- ad_ip_parameter sys_ps7 CONFIG.PCW_IRQ_F2P_MODE REVERSE
- ad_ip_parameter sys_ps7 CONFIG.PCW_MIO_0_PULLUP {enabled}
-@@ -77,10 +96,14 @@ ad_ip_parameter sys_ps7 CONFIG.PCW_MIO_48_PULLUP {enabled}
- ad_ip_parameter sys_ps7 CONFIG.PCW_MIO_49_PULLUP {disabled}
- ad_ip_parameter sys_ps7 CONFIG.PCW_MIO_53_PULLUP {enabled}
- 
-+ad_ip_parameter sys_ps7 CONFIG.PCW_APU_PERIPHERAL_FREQMHZ 667
-+
-+
- # DDR MT41K256M16 HA-125 (32M, 16bit, 8banks)
- 
- ad_ip_parameter sys_ps7 CONFIG.PCW_UIPARAM_DDR_PARTNO {MT41K256M16 RE-125}
- ad_ip_parameter sys_ps7 CONFIG.PCW_UIPARAM_DDR_BUS_WIDTH {16 Bit}
-+ad_ip_parameter sys_ps7 CONFIG.PCW_UIPARAM_ACT_DDR_FREQ_MHZ 525
- ad_ip_parameter sys_ps7 CONFIG.PCW_UIPARAM_DDR_USE_INTERNAL_VREF 0
- ad_ip_parameter sys_ps7 CONFIG.PCW_UIPARAM_DDR_TRAIN_WRITE_LEVEL 1
- ad_ip_parameter sys_ps7 CONFIG.PCW_UIPARAM_DDR_TRAIN_READ_GATE 1
-@@ -218,13 +241,18 @@ ad_ip_parameter axi_ad9361_adc_dma CONFIG.SYNC_TRANSFER_START 0
+@@ -218,13 +218,18 @@ ad_ip_parameter axi_ad9361_adc_dma CONFIG.SYNC_TRANSFER_START 0
  ad_ip_parameter axi_ad9361_adc_dma CONFIG.AXI_SLICE_SRC 0
  ad_ip_parameter axi_ad9361_adc_dma CONFIG.AXI_SLICE_DEST 0
  ad_ip_parameter axi_ad9361_adc_dma CONFIG.DMA_2D_TRANSFER 0
@@ -83,7 +23,7 @@ index 4787085..247beef 100644
  
  # connections
  
-@@ -262,8 +290,8 @@ ad_connect axi_ad9361/adc_data_q1 cpack/fifo_wr_data_3
+@@ -262,8 +267,8 @@ ad_connect axi_ad9361/adc_data_q1 cpack/fifo_wr_data_3
  
  ad_connect cpack/enable_0 rx_fir_decimator/enable_out_0
  ad_connect cpack/enable_1 rx_fir_decimator/enable_out_1
@@ -94,7 +34,7 @@ index 4787085..247beef 100644
  ad_connect rx_fir_decimator/valid_out_0 cpack/fifo_wr_en
  
  ad_connect axi_ad9361_adc_dma/fifo_wr cpack/packed_fifo_wr
-@@ -383,3 +411,29 @@ ad_cpu_interrupt ps-13 mb-13 axi_ad9361_adc_dma/irq
+@@ -383,3 +388,29 @@ ad_cpu_interrupt ps-13 mb-13 axi_ad9361_adc_dma/irq
  ad_cpu_interrupt ps-12 mb-12 axi_ad9361_dac_dma/irq
  ad_cpu_interrupt ps-11 mb-11 axi_spi/ip2intc_irpt
  

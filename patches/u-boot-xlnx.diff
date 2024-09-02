@@ -1,18 +1,8 @@
 diff --git a/include/configs/zynq-common.h b/include/configs/zynq-common.h
-index fd50caf4..3b468e68 100644
+index fd50caf4..a5ec8b54 100644
 --- a/include/configs/zynq-common.h
 +++ b/include/configs/zynq-common.h
-@@ -16,6 +16,9 @@
- # define CONFIG_CPU_FREQ_HZ	800000000
- #endif
- 
-+
-+
-+
- #define	CONFIG_SYS_DEVICE_NULLDEV	1
- 
- /* Cache options */
-@@ -257,7 +260,7 @@
+@@ -257,7 +257,7 @@
  	"fdt_high=0x20000000\0"	\
  	"initrd_high=0x20000000\0"	\
  	"bootenv=uEnv.txt\0" \
@@ -21,7 +11,7 @@ index fd50caf4..3b468e68 100644
  	"clear_reset_cause=mw f8000008 df0d && mw f8000258 00400000 && mw f8000004 767b\0" \
  	"loadbootenv=load mmc 0 ${loadbootenv_addr} ${bootenv}\0" \
  	"importbootenv=echo Importing environment from SD ...; " \
-@@ -362,6 +365,14 @@
+@@ -362,6 +362,14 @@
  			"echo Running uenvcmd ...; " \
  			"run uenvcmd; " \
  		"fi\0" \
