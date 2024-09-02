@@ -1,0 +1,59 @@
+diff --git a/arch/arm/dts/zynq-pluto-sdr.dts b/arch/arm/dts/zynq-pluto-sdr.dts
+index c618d98b54..40a8cef054 100644
+--- a/arch/arm/dts/zynq-pluto-sdr.dts
++++ b/arch/arm/dts/zynq-pluto-sdr.dts
+@@ -16,6 +16,7 @@
+ 		ethernet0 = &gem0;
+ 		serial0 = &uart1;
+ 		spi0 = &qspi;
++		mmc0 = &sdhci0;
+ 	};
+ 
+ 	memory {
+@@ -75,3 +76,8 @@
+ 	dr_mode = "host";
+ 	usb-phy = <&usb_phy0>;
+ };
++
++&sdhci0 {
++	u-boot,dm-pre-reloc;
++	status = "okay";
++};
+diff --git a/include/configs/zynq-common.h b/include/configs/zynq-common.h
+index fd50caf450..3b468e6813 100644
+--- a/include/configs/zynq-common.h
++++ b/include/configs/zynq-common.h
+@@ -16,6 +16,9 @@
+ # define CONFIG_CPU_FREQ_HZ	800000000
+ #endif
+ 
++
++
++
+ #define	CONFIG_SYS_DEVICE_NULLDEV	1
+ 
+ /* Cache options */
+@@ -257,7 +260,7 @@
+ 	"fdt_high=0x20000000\0"	\
+ 	"initrd_high=0x20000000\0"	\
+ 	"bootenv=uEnv.txt\0" \
+-	"maxcpus=1\0" \
++	"maxcpus=2\0" \
+ 	"clear_reset_cause=mw f8000008 df0d && mw f8000258 00400000 && mw f8000004 767b\0" \
+ 	"loadbootenv=load mmc 0 ${loadbootenv_addr} ${bootenv}\0" \
+ 	"importbootenv=echo Importing environment from SD ...; " \
+@@ -362,6 +365,14 @@
+ 			"echo Running uenvcmd ...; " \
+ 			"run uenvcmd; " \
+ 		"fi\0" \
++	"sdboot=if mmcinfo; then " \
++			"run uenvboot; " \
++			"echo Copying Linux from SD to RAM... && " \
++			"load mmc 0 ${fit_load_address} ${kernel_image} && " \
++			"load mmc 0 ${devicetree_load_address} ${devicetree_image} && " \
++			"load mmc 0 ${ramdisk_load_address} ${ramdisk_image} && " \
++			"bootm ${fit_load_address} ${ramdisk_load_address} ${devicetree_load_address}; " \
++		"fi\0" \
+ 	"usbboot=if usb start; then " \
+ 			"run uenvboot; " \
+ 			"echo Copying Linux from USB to RAM... && " \
